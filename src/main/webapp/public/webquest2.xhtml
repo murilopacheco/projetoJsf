@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head> </h:head> 
+<body> 
+<p:panel id="panel" header="Crimes Informáticos" style="align:center">
+<h:form>
+<p:growl id="growl" sticky="true" showDetail="true"/>
+ 
+    <p:wizard flowListener="#{userWizard.onFlowProcess}">
+        <p:tab id="personal" title="Dados pessoais">
+            <p:panel header="Dados do aluno">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="nome: *" />
+                    <p:inputText value="#{userWizard.user.firstname}" required="true" label="Firstname"/>
+ 
+                    <h:outputText value="Sobrenome: *" />
+                    <p:inputText value="#{userWizard.user.lastname}" required="true" label="Lastname"/>
+ 
+                    <h:outputText value="idade: " />
+                    <p:inputText value="#{userWizard.user.age}" />
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="tarefa1" title="Tarefa 1">
+            <p:panel header="Legislação">
+                <p:messages />
+                
+                Preparado para começar:
+                Em primeiro lugar você precisa saber um pouco mais sobre crimes informáticos,<br />
+                suas caracteristicas, alguns conceitos sobre componentes de informática alem das<br />
+                diferenças d hackers e crackers.<br />
+                Aumente seus conhecimentos antes de ir para o quiz:<br />
+               <br />
+                <h:outputLink value="http://jus.com.br/artigos/29634/crimes-informaticos">
+                Saiba mais sobre os crimes aqui!</h:outputLink><br />
+                <br />
+                <h:outputLink value="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12737.htm">
+                Saiba mais sobre a legislação aqui!</h:outputLink>
+ 				<br />
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="componentes" title="Tarefa 2">
+            <p:panel header="Componentes de TI">
+                <p:messages />
+                Para a segunda parte leia estes artigos:<br />
+                São artigos refentes a componentes de TI ou seja componentes que todo computador possui.<br />
+                <br />
+                <h:outputLink value="http://www.aprendainformaticafacil.com.br/2013/02/componentes-do-computador.html">
+                Saiba mais sobre computadores aqui!</h:outputLink>
+                <br />
+                <h:outputLink value="http://www.infowester.com/malwares.php">
+                Saiba mais sobre sistemas e virus aqui!</h:outputLink>
+                <br />
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="crackers" title="Tarefa 3">
+            <p:panel header="Crackers e hackers">
+                <p:messages />
+                Para a terceira parte leia estes artigos:<br />
+                São artigos que explicam a diferença de Crackers e hackers e os maiores roubos informáticos do mundo.<br />
+                <br />
+                <h:outputLink value="http://www.http://olhardigital.uol.com.br/fique_seguro/noticia/qual-a-diferenca-entre-hacker-e-cracker/38024">
+                Saiba mais sobre crackers e hackers aqui!</h:outputLink>
+                <br />
+                <h:outputLink value="http://www.tecmundo.com.br/seguranca/26476-os-9-maiores-roubos-de-dados-da-internet.htm">
+                Saiba mais sobre problemas enfrentados por usuários de computador com crackers aqui!</h:outputLink>
+                <br />
+            </p:panel>
+        </p:tab>
+         <p:tab id="resenha" title="Tarefa 4">
+            <p:panel header="Resenha">
+                <p:messages />
+                Para a terminar sua Quest faça o que se pede:<br />
+                Ápos concluir as atividades anteriores faça uma resenha expondo os conhecimentos obitidos e pontue os cuidados.<br />
+                que cada um precisa ter no dia a dia para diminiuir os riscos de ser uma vítima de crimes informáticos<br />
+               <p:editor id="editor" widgetVar="editorWidget" value="#{userWizard.user.resenha}" width="800" />
+                <br />
+                
+                <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+            </p:panel>
+            
+        </p:tab>
+    </p:wizard>
+ 
+</h:form>
+</p:panel>
+</body> 
+</html>

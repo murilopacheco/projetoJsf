@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+      xmlns:p="http://primefaces.org/ui">
+      
+     
+	
+	<h:head />
+	<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+	 <h:body>
+	 <p:growl id="growl" showDetail="true" sticky="true" />   
+	 	<h:form id="formPessoa" role="form" >
+		  <h:inputText value="#{pessoa.pessoa.id}" />
+		  <p:panel id="panel" header="Nova Pessoa">
+		   <h:panelGrid columns="2" id="matchGrid" cellpadding="5">   
+	          <p:outputLabel for="inputNome" value="Nome"  />
+	          <p:inputText value="#{pessoa.pessoa.nome}" required="true" id="inputNome"
+	                        pt:placeholder="Digite aqui seu nome"
+	                        validatorMessage="nome inválido."
+	                        requiredMessage="nome é obrigatório.">
+	                     <!--   <f:validateRegex pattern="[a-zA-Z]"/> -->
+	                        <p:ajax event="blur" render="m_inputNome" />
+	                    </p:inputText>
+	                <p:outputLabel for="inputCPF" value="CPF" />
+	                    <p:inputMask value="#{pessoa.pessoa.CPF}" 
+	                        id="inputCPF" required="true"
+	                        pt:placeholder="digite o cpf"
+	                        mask="999.999.999-99"
+	                        requiredMessage="cpf obrigatório."
+	                        validatorMessage="cpf inválido">
+	                        <f:validateLength minimum="6" maximum="20" />
+	                        <f:ajax event="blur" />
+	                    </p:inputMask>
+	                    <p:outputLabel for="inputSexo" value="Sexo" />
+	                    <p:selectOneRadio value="#{pessoa.pessoa.sexo}" 
+	                        id="inputSexo">
+	                         <f:selectItem itemLabel="Masculino" itemValue="M" />
+           					 <f:selectItem itemLabel="Feminino" itemValue="F" />
+	                        <f:ajax event="blur" />
+	                    </p:selectOneRadio>
+	                     <h:outputLabel for="inputDataNascimento" value="Data de Nascmimento: " />
+       				 	<p:calendar value="#{pessoa.pessoa.dataNascimento}" id="inputDataNascimento" pattern="dd-MM-yyyy" mask="true" />
+       				</h:panelGrid>
+					
+				<h:panelGrid columns="2" id="gridEndereço" cellpadding="5">
+       				<h:outputLabel value="" />
+       				<p:separator style="width:500px;" />
+       				<h3>Endereço</h3>
+       				<h:outputLabel value="" />
+					<p:outputLabel for="inputCep" value="CEP:" />
+        			<p:inputMask id="inputCep" value="#{pessoa.endereço.cep}" mask="99.999-999"/>
+       			 	<p:outputLabel for="inputRua" value="Rua"  />
+       				<p:inputText value="#{pessoa.endereço.rua}" required="true" id="inputRua"
+	                        pt:placeholder="Digite aqui o nome da Rua" size="50" />
+       				<p:outputLabel for="inputComplemento" value="Complemento"  />
+       				<p:inputText value="#{pessoa.endereço.complemento}" required="true" id="inputComplemento"
+	                        pt:placeholder="Digite aqui o complemento(Ex. Qd 00 lote 00)" size="50" />
+       				<p:outputLabel for="imputNumero" value="Número"  />
+       				<p:inputText value="#{pessoa.endereço.numero}" required="true" id="imputNumero" />
+       				<p:outputLabel for="imputSetor" value="Setor"  />
+       				<p:inputText value="#{pessoa.endereço.setor}" required="true" id="imputSetor" />
+       				<p:outputLabel for="imputCidade" value="Cidade"  />
+       				<p:inputText value="#{pessoa.endereço.cidade}" required="true" id="imputCidade" />
+       				<p:outputLabel for="imputEstado" value="Estado"  />
+       				<p:inputText value="#{pessoa.endereço.estado}" required="true" id="imputEstado" /> 
+	                        
+	                		
+	        		<p:commandButton value="Save" actionListener="#{pessoa.salvar()}" update="formlista, growl" >
+	        		<p:ajax  render=":formlista" ></p:ajax>
+			         
+	        		</p:commandButton>  
+	       	 	</h:panelGrid>    
+	    </p:panel>
+	    </h:form>
+	 <h:form id="formTelefone">
+	 <h:panelGrid columns="2" id="gridTelefone" cellpadding="5">
+	 <p:outputLabel for="tipo" value="DDD:" />
+     				<p:selectOneListbox id="tipo" value="#{pessoa.telefone.tipo}">
+		            <f:selectItem itemLabel="Celular" itemValue="celular" />
+		            <f:selectItem itemLabel="Fixo" itemValue="fixo" />
+		            <f:selectItem itemLabel="Trabalho" itemValue="Trabalho" />
+		        </p:selectOneListbox>
+		        <p:outputLabel for="ddd" value="DDD:" />
+		        <p:inputMask id="ddd" value="#{pessoa.telefone.ddd}" mask="(99)"/>
+		        <p:outputLabel for="telefone" value="Telefone:" />
+		        <p:inputMask id="telefone" value="#{pessoa.telefone.telefone}" mask="9999-9999"/>
+		      
+		        <p:commandButton value="add" actionListener="#{pessoa.addTelefone()}" update="gridTelefones" >
+      						<p:ajax  render="gridTelefones" ></p:ajax>
+      			</p:commandButton>
+		        
+		         <p:dataTable id="gridTelefones" var="tel" value="#{pessoa.telefones}">
+			        <f:facet name="header">
+			            Telefones:
+			        </f:facet>
+			        <p:column headerText="Tipo">
+			            <h:outputText value="#{tel.tipo}" />
+			        </p:column>
+			        <p:column headerText="ddd">
+			            <h:outputText value="#{tel.ddd}" />
+			        </p:column>
+			        <p:column headerText="telefone">
+			            <h:outputText value="#{tel.telefone}" />
+			        </p:column>
+			        <p:column style="width:32px;text-align: center" headerText="Ação">
+			            <p:commandButton value="excluir" actionListener="#{pessoa.removerTelefone(tel)}" update="gridTelefones , formTelefone" >
+      						<p:ajax  render=":formTelefone" ></p:ajax>
+      						</p:commandButton>
+			        </p:column>
+			    </p:dataTable>
+		</h:panelGrid>    
+	 
+	 </h:form>
+	 <p:separator />
+
+    <h:form id= "formlista" >
+    	<p:panel id="panel" header="Lista de  Pessoas">
+			 <p:dataTable var="varPessoa" value="#{pessoa.pessoa.pessoas}" id="tabelaFiltrada" 
+			 widgetVar="pessoasFiltradas" emptyMessage="Não existem dados a serem exibidos" 
+			 filteredValue="#{pessoa.pessoa.pessoasFiltradas}">
+		        <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Busca Geral:" />
+		                <p:inputText id="filtroGlobal" onkeyup="PF('pessoasFiltradas').filter()" 
+		                style="width:150px" placeholder="Digite a busca"/>
+		            </p:outputPanel>
+		        </f:facet>
+		 
+		        <p:column filterBy="#{varPessoa.id}" headerText="Id" footerText="contem" filterMatchMode="contains">
+		            <h:outputText value="#{varPessoa.id}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varPessoa.nome}" headerText="Login" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varPessoa.nome}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varPessoa.CPF}" headerText="CPF" footerText="cotem" filterMatchMode="contains">
+		                 <h:outputText value="#{varPessoa.CPF}" />
+		        </p:column>
+		         <p:column headerText="Ação">
+			         <p:commandButton value="excluir" actionListener="#{pessoa.delete(varPessoa)}" 
+			         update="tabelaFiltrada">
+			         <p:ajax  render=":formlista" ></p:ajax>
+			         </p:commandButton> 
+			         
+			         <p:commandButton value="editar" actionListener="#{pessoa.editar(varPessoa)}" 
+			         update="formPessoa">
+			         <p:ajax  render=":formPessoa" ></p:ajax>
+			         </p:commandButton> 
+			    </p:column>
+	    </p:dataTable>
+    </p:panel>
+	    
+	   </h:form>
+   </h:body>
+</html>

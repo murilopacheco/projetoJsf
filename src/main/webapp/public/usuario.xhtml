@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:rich="http://richfaces.org/rich">
+      
+     <!--  <h:outputStylesheet library="css" name="estilo.css"  /> -->
+     
+	
+	<h:head />
+	<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+	 <h:body>
+	 <p:growl id="growl" showDetail="true" sticky="true" />   
+	 	<h:form id="formUsuario" role="form" >
+		  <p:panel id="panel" header="Novo Usuário">
+		   <h:panelGrid columns="2" id="matchGrid" cellpadding="5">   
+	          <p:outputLabel for="inputEmail" value="Email"  />
+	          <p:inputText value="#{usuario.usuario.email}" required="true" id="inputEmail"
+	                        pt:placeholder="Digite aqui seu email"
+	                        validatorMessage="email inválido."
+	                        requiredMessage="é necessário que você informe seu email.">
+	                        <f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+	                        <p:ajax event="blur" render="m_inputEmail" />
+	                    </p:inputText>
+	                <p:outputLabel for="inputuser" value="Usuário" />
+	                    <p:inputText value="#{usuario.usuario.login}" 
+	                        id="inputuser" required="true"
+	                        pt:placeholder="usuario 6 a 20 caracteres"
+	                        requiredMessage="é necessário que você informe seu usuário."
+	                        validatorMessage="usuário deve conter entre 6 e 20 caracteres.">
+	                        <f:validateLength minimum="6" maximum="20" />
+	                        <f:ajax event="blur" />
+	                    </p:inputText>
+
+       				 <h:outputLabel for="password" value="Senha: *" />
+       				 <p:password value="#{usuario.usuario.password}" id="password" match="validacao" label="senha" required="true"
+       				 feedback="true"
+                   	 promptLabel="Força da senha:" weakLabel="fraca"
+                     goodLabel="razoavel" strongLabel="forte" />
+ 
+       				 <h:outputLabel for="validacao" value="repita a senha: *" />
+       				 <p:password value="#{usuario.usuario.validacao}" id="validacao" label="validacao" required="true" />
+    		
+	        <p:commandButton value="Save" actionListener="#{usuario.salvar()}" update="formlista, growl" >
+	        </p:commandButton>  
+	        	</h:panelGrid>    
+	    </p:panel>
+	    </h:form>
+	 
+	 <p:separator />
+
+    <h:form id= "formlista" >
+    	<p:panel id="panel" header="Lista de  Usuário">
+			 <p:dataTable var="varUsuario" value="#{usuario.usuario.usuarios}" id="tabelaFiltrada" 
+			 widgetVar="usuariosFiltrados" emptyMessage="Não existem dados a serem exibidos" 
+			 filteredValue="#{usuario.usuario.usuariosFiltrados}">
+		        <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Busca Geral:" />
+		                <p:inputText id="filtroGlobal" onkeyup="PF('usuariosFiltrados').filter()" 
+		                style="width:150px" placeholder="Digite a busca"/>
+		            </p:outputPanel>
+		        </f:facet>
+		 
+		        <p:column filterBy="#{varUsuario.id}" headerText="Id" footerText="contem" filterMatchMode="contains">
+		            <h:outputText value="#{varUsuario.id}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varUsuario.login}" headerText="Login" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varUsuario.login}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varUsuario.ativo}" headerText="Ativo" footerText="igual" filterMatchMode="equals">
+		            <f:facet name="filter">
+		                <p:selectOneButton onchange="PF('usuariosFiltrados').filter()">
+		                  <f:converter converterId="javax.faces.Boolean" />
+		                    <f:selectItem itemLabel="todos" itemValue="" />
+		                    <f:selectItem itemLabel="Ativo" itemValue="true" />
+		                    <f:selectItem itemLabel="Inativo" itemValue="false" />
+		                </p:selectOneButton>
+		            </f:facet>
+		            <h:outputText value="#{varUsuario.ativo ? 'Sim': 'Não'}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varUsuario.email}" headerText="email" footerText="cotem" filterMatchMode="contains">
+		                 <h:outputText value="#{varUsuario.email}" />
+		        </p:column>
+		         <p:column headerText="Ação">
+			         <p:commandButton value="excluir" actionListener="#{usuario.delete(varUsuario)}" 
+			         update="tabelaFiltrada">
+			         <p:ajax  render=":formlista" ></p:ajax>
+			         </p:commandButton> 
+			    </p:column>
+	    </p:dataTable>
+    </p:panel>
+	    
+	   </h:form>
+   </h:body>
+</html>
