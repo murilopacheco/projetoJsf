@@ -1,5 +1,7 @@
 package Dao.utils;
 
+import daoAula.PedidoDao;
+import daoAula.PedidoDaoImp;
 import daoAula.PessoaDao;
 import daoAula.PessoaDaoImp;
 import daoAula.UsuarioDao;
@@ -17,5 +19,9 @@ public class DAOFactory {
 		pessoaDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
 		return pessoaDaoImp;
 	}
-
+	public static PedidoDao createPedido(){
+		PedidoDaoImp pedidoDaoImp = new PedidoDaoImp();
+		pedidoDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+		return pedidoDaoImp;
+	}
 }

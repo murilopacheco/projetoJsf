@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+      xmlns:p="http://primefaces.org/ui">
+      
+     
+	
+	<h:head />
+	<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+	 <h:body>
+	 <p:growl id="growl" showDetail="true" sticky="true" />   
+	 	<h:form id="formPedido" role="form" >
+		  <p:panel id="panel" header="Novo Pedido">
+	                     <h:outputLabel for="inputDataPedido" value="Data do Pedido: " />
+       				 	<p:calendar value="#{pedido.pedido.dataPedido}" id="inputDataPedido" pattern="dd-MM-yyyy" mask="true" />
+					
+	                		
+	        		<p:commandButton value="Save" actionListener="#{pedido.salvar()}" update="formPedido, growl" >
+	        		<p:ajax  render=":formlista" ></p:ajax>
+			         
+	        		</p:commandButton>    
+	    </p:panel>
+	    </h:form>
+   </h:body>
+</html>

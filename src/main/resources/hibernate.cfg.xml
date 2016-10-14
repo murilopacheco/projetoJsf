@@ -17,5 +17,7 @@
 		<mapping class="Mdelo.Pessoa"/>       
 		<mapping class="Mdelo.EndereçoPessoa"/>   
 		<mapping class="Mdelo.TelefonePessoa"/>     
+		<mapping class="Mdelo.Pedido"/>
+		<mapping class="Mdelo.Produto"/>  
     </session-factory>
 </hibernate-configuration>
