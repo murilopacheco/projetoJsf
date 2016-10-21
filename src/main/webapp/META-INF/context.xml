@@ -4,6 +4,6 @@
         type="javax.sql.DataSource"
         maxActive="100" maxIdle="40" maxWait="1000"
         username="root"
-        password="root" driverClassName="com.mysql.jdbc.Driver"
+        password="" driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://localhost:3306/projetoAula" />
 </Context>

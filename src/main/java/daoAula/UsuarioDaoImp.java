@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import Mdelo.Usuario;
 
@@ -36,6 +37,18 @@ public class UsuarioDaoImp implements UsuarioDao {
 	public Usuario findById(Usuario usuario){
 		Criteria cri = session.createCriteria(Usuario.class);	
 		usuario = (Usuario) cri.list().get(0);
+		return usuario;
+	}
+	
+	public Usuario findByLogin(Usuario usuario){
+		Criteria cri = session.createCriteria(Usuario.class).add(Restrictions.eq("login", usuario.getLogin()));	
+		if(!cri.list().isEmpty()){
+		usuario = (Usuario) cri.list().get(0);
+		}
+		else {
+			usuario = null;
+		}
+		
 		return usuario;
 	}
 

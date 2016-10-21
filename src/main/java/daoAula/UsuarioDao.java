@@ -19,4 +19,9 @@ public interface UsuarioDao {
 		 
 		 return usuario;
 	 }
+	 
+	 public default Usuario findByLogin(Usuario usuario){
+		 
+		 return usuario;
+	 }
 }

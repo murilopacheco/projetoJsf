@@ -39,5 +39,10 @@ public class UsuarioNegocio {
 		usuario = usuarioDao.findByID(usuario);
 		return usuario;
 	}
+	
+	public Usuario findByLogin(Usuario usuario){
+		usuario = usuarioDao.findByLogin(usuario);
+		return usuario;
+	}
 }
 
