@@ -8,8 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +18,8 @@ import utils.GenerateMD5;
 @ManagedBean(name="login")
 @SessionScoped
 public class LoginBean implements Serializable {
+	
+	
 
 	/**
 	 * 
@@ -38,6 +38,7 @@ public class LoginBean implements Serializable {
 	}
 	
 	public String login() throws IOException{
+		String navegacao = null;
 		UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
 		Usuario usuarioBanco = new Usuario();
 		usuarioBanco = null;
@@ -55,7 +56,7 @@ public class LoginBean implements Serializable {
 				FacesContext fc = FacesContext.getCurrentInstance();
 				HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 				session.setAttribute("usuario", usuarioBanco);
-			
+				navegacao = "/public/index.xhtml?faces-redirect=true";
 			}
 			else{
 				FacesContext.getCurrentInstance().addMessage(
@@ -66,8 +67,9 @@ public class LoginBean implements Serializable {
 		}
 		}
 		usuarioBanco = null;
-		return "/public/index.xhtml?faces-redirect=true";
+		return navegacao;
 	}
+	
 
 	public Usuario getUsuario() {
 		return usuario;

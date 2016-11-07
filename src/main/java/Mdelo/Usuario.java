@@ -2,10 +2,14 @@ package Mdelo;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,6 +30,11 @@ public class Usuario {
 	private String validacao;
 	private Boolean ativo;
 	private String email;
+	
+	//@OneToOne(optional = true, fetch = FetchType.LAZY)
+   // @JoinColumn(name="id_perfil", nullable=true)
+	private int id_perfil;
+	
 	@Transient
 	private List<Usuario> usuarios;
 	@Transient
@@ -80,7 +89,12 @@ public class Usuario {
 	public void setUsuariosFiltrados(List<Usuario> usuariosFiltrados) {
 		this.usuariosFiltrados = usuariosFiltrados;
 	}
-	
+	public int getId_perfil() {
+		return id_perfil;
+	}
+	public void setId_perfil(int id_perfil) {
+		this.id_perfil = id_perfil;
+	}
 	
 	
 	
