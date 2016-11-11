@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+      xmlns:p="http://primefaces.org/ui">
+      
+     <!--  <h:outputStylesheet library="css" name="estilo.css"  /> -->
+     
+	
+	<h:head />
+	<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+	 <h:body>
+	 <p:growl id="growl" showDetail="true" sticky="true" />   
+	 	<h:form id="formPerfil" role="form" >
+		  <p:panel id="panel" header="Novo Perfil">
+		   <h:panelGrid columns="2" id="matchGrid" cellpadding="5">   
+	          <p:outputLabel for="inputNome" value="Nome Perfil"  />
+	          <p:inputText value="#{perfilUsuario.perfilUsuario.nome}" required="true" id="inputNome"
+	                        pt:placeholder="Digite aqui o nome do pefil">
+	                    </p:inputText>
+
+	        <p:commandButton value="Save" actionListener="#{perfilUsuario.salvar()}" update= "formlista, growl" >
+	        </p:commandButton>  
+	        	</h:panelGrid>    
+	    </p:panel>
+	    </h:form>
+	 
+	 <p:separator />
+
+    <h:form id= "formlista" >
+    	<p:panel id="panel" header="Lista de  Perfis">
+			 <p:dataTable var="varPerfil" value="#{perfilUsuario.perfisList}" id="tabelaFiltrada" 
+			 widgetVar="perfisFiltrados" emptyMessage="Não existem dados a serem exibidos" 
+			 filteredValue="#{perfilUsuario.perfisFiltrados}">
+		        <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Busca Geral:" />
+		                <p:inputText id="filtroGlobal" onkeyup="PF('perfisFiltrados').filter()" 
+		                style="width:150px" placeholder="Digite a busca"/>
+		            </p:outputPanel>
+		        </f:facet>
+		 
+		        <p:column filterBy="#{varPerfil.id}" headerText="Id" footerText="contem" filterMatchMode="contains">
+		            <h:outputText value="#{varPerfil.id}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varPerfil.nome}" headerText="Nome" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varPerfil.nome}" />
+		        </p:column>
+		         <p:column headerText="Ação">
+			         <p:commandButton value="excluir" actionListener="#{perfilUsuario.delete(varPerfil)}" 
+			         update="tabelaFiltrada">
+			         <p:ajax  render=":formlista" ></p:ajax>
+			         </p:commandButton> 
+			    </p:column>
+	    </p:dataTable>
+    </p:panel>
+	    
+	   </h:form>
+   </h:body>
+</html>

@@ -23,7 +23,7 @@ import Mdelo.Usuario;
  * Não se esquecer de permitir acesso as páginas aos usuários com a deivida permissão.
  *
  */
-@WebFilter(urlPatterns = { "/public/usuario.jsf", "/public/usuario.xhtml", "/public/pedido.jsf", "/public/index.jsf" })
+@WebFilter(urlPatterns = {  "/public/pedido.jsf", "/public/index.jsf" })
 public class Filtro implements Filter {
 
 	public List<String> enderecosUsuarioComum = new ArrayList<String>();
@@ -49,7 +49,7 @@ public class Filtro implements Filter {
 			((HttpServletResponse) response).sendRedirect(contextPath + navegacao);
 		} else {
 
-			if (user.getId_perfil() == 1) {
+			if (user.getPerfilUsuario().getId() == 1) {
 				chain.doFilter(request, response);
 			} else {
 				String contextRequest = ((HttpServletRequest) request).getRequestURI();

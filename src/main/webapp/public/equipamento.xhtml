@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:rich="http://richfaces.org/rich">
+      
+     <!--  <h:outputStylesheet library="css" name="estilo.css"  /> -->
+     
+	
+	<h:head />
+	<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+	 <h:body>
+	 <p:growl id="growl" showDetail="true" sticky="true" />   
+	 	<h:form id="formEquipamento" role="form" >
+		  <p:panel id="panel" header="Novo Equipamento">
+		   <h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+				<p:outputLabel for="inputNome" value="Nome Equipamento" />
+				<p:inputText value="#{equipamento.equipamento.nome}" required="true"
+					id="inputNome" pt:placeholder="Digite aqui o nome do equipamento">
+				</p:inputText>
+				<p:outputLabel for="inputQuantidade" value="Quantidade" />
+				<p:inputText value="#{equipamento.equipamento.quantidade}" required="true"
+					id="inputQuantidade" pt:placeholder="Digite aqui a quantidade">
+				</p:inputText>
+	        <p:commandButton value="Save" actionListener="#{equipamento.salvar()}" update= "growl" >
+	        </p:commandButton>  
+	        	</h:panelGrid>    
+	    </p:panel>
+	    </h:form>
+	 
+	 <p:separator />
+
+    <h:form id= "formlista" >
+    	<p:panel id="panel" header="Lista de  Equipamentos">
+			 <p:dataTable var="varEquipamento" value="#{equipamento.equipamentos}" id="tabelaFiltrada" 
+			 widgetVar="equipamentosFiltrados" emptyMessage="Não existem dados a serem exibidos" 
+			 filteredValue="#{equipamento.equipamentos}">
+		        <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Busca Geral:" />
+		                <p:inputText id="filtroGlobal" onkeyup="PF('equipamentosFiltrados').filter()" 
+		                style="width:150px" placeholder="Digite a busca"/>
+		            </p:outputPanel>
+		        </f:facet>
+		 
+		        <p:column filterBy="#{varEquipamento.id}" headerText="Id" footerText="contem" filterMatchMode="contains">
+		            <h:outputText value="#{varEquipamento.id}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varEquipamento.nome}" headerText="Login" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varEquipamento.nome}" />
+		        </p:column>
+		         <p:column filterBy="#{varEquipamento.quantidade}" headerText="Login" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varEquipamento.quantidade}" />
+		        </p:column>
+		         <p:column headerText="Ação">
+			         <p:commandButton value="excluir" actionListener="#{equipamento.Delete(varEquipamento)}" 
+			         update="tabelaFiltrada">
+			         <p:ajax  render=":formlista" ></p:ajax>
+			         </p:commandButton> 
+			    </p:column>
+	    </p:dataTable>
+    </p:panel>
+	    
+	   </h:form>  -->
+   </h:body>
+</html>

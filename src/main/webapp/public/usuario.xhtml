@@ -47,8 +47,16 @@
  
        				 <h:outputLabel for="validacao" value="repita a senha: *" />
        				 <p:password value="#{usuario.usuario.validacao}" id="validacao" label="validacao" required="true" />
-    		
-	        <p:commandButton value="Save" actionListener="#{usuario.salvar()}" update="formlista, growl" >
+
+					<p:outputLabel for="perfil" value="Perfil: " />
+					<p:selectOneMenu id="perfil" value="#{usuario.perfilUsuario.id}"
+						style="width:150px">
+						<f:selectItem itemLabel="Escolha o perfil" itemValue=""
+							noSelectionOption="1" />
+						<f:selectItems value="#{usuario.comboPerfis}" />
+					</p:selectOneMenu>
+
+				<p:commandButton value="Save" actionListener="#{usuario.salvar()}" update="formlista, growl" >
 	        </p:commandButton>  
 	        	</h:panelGrid>    
 	    </p:panel>

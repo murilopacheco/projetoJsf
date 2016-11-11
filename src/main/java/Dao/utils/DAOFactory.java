@@ -1,7 +1,11 @@
 package Dao.utils;
 
+import daoAula.EquipamentoDao;
+import daoAula.EquipamentoDaoImp;
 import daoAula.PedidoDao;
 import daoAula.PedidoDaoImp;
+import daoAula.PerfilUsuarioDao;
+import daoAula.PerfilUsuarioDaoImp;
 import daoAula.PessoaDao;
 import daoAula.PessoaDaoImp;
 import daoAula.UsuarioDao;
@@ -23,5 +27,17 @@ public class DAOFactory {
 		PedidoDaoImp pedidoDaoImp = new PedidoDaoImp();
 		pedidoDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
 		return pedidoDaoImp;
+	}
+	
+	public static PerfilUsuarioDao createPerfil(){
+		PerfilUsuarioDaoImp perfilUsuarioDaoImp = new PerfilUsuarioDaoImp();
+		perfilUsuarioDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+		return perfilUsuarioDaoImp;
+	}
+	
+	public static EquipamentoDao createEquipamento(){
+		EquipamentoDaoImp equipamentoDaoImp = new EquipamentoDaoImp();
+		equipamentoDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+		return equipamentoDaoImp;
 	}
 }

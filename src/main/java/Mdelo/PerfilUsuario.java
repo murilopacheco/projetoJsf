@@ -1,25 +1,28 @@
 package Mdelo;
 
-
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="produto")
-public class Produto {
-	
+@Table(name="perfilUsuario")
+public class PerfilUsuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
 	private String nome;
-	private int quantidade;
+	
+	@OneToMany()
+	private List<Usuario> usuarios;
 	
 	
 	public int getId() {
@@ -34,14 +37,14 @@ public class Produto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getQuantidade() {
-		return quantidade;
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
+
 	
 	
 
-	
 }
