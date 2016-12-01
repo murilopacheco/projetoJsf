@@ -23,7 +23,7 @@ import Mdelo.Usuario;
  * Não se esquecer de permitir acesso as páginas aos usuários com a deivida permissão.
  *
  */
-@WebFilter(urlPatterns = {  "/public/pedido.jsf", "/public/index.jsf" })
+@WebFilter(urlPatterns = {"/public/reserva.jsf", "/public/reserva.xhtml" , "/public/pedido.jsf", "/public/index.jsf" })
 public class Filtro implements Filter {
 
 	public List<String> enderecosUsuarioComum = new ArrayList<String>();

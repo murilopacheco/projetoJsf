@@ -43,17 +43,29 @@ public class EquipamentoBean {
 			EquipamentoNegocio equipamentoNegocio = new EquipamentoNegocio();
 			
 			boolean salvo = false;
+			if(equipamento.getId() == 0){
 			salvo = equipamentoNegocio.salvar(equipamento);
 			if(salvo == true){
 				FacesContext context = FacesContext.getCurrentInstance();
 				context.addMessage(null, new FacesMessage("Successful",  "equipamento salvo com sucesso!") );
+				equipamentos.add(equipamento);
+				equipamento = new Equipamento();
+			}
+			}else{
+				salvo = equipamentoNegocio.salvar(equipamento);
+				if(salvo == true){
+					FacesContext context = FacesContext.getCurrentInstance();
+					context.addMessage(null, new FacesMessage("Successful",  "equipamento editado com sucesso!") );
+					equipamento = new Equipamento();
+			}
+				
    
 		}
-		return "pessoa recebido com sucesso" ;
+		return "" ;
 		
 	}
-	public void Delete(Equipamento equipamento){
-		String teste;
+	public void Editar(Equipamento equipamentoTela){
+		equipamento = equipamentoTela;
 	}
 	
 	public List<Equipamento> listaEquipamentos(){

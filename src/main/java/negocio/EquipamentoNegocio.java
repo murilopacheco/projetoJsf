@@ -4,6 +4,7 @@ import java.util.List;
 
 import Dao.utils.DAOFactory;
 import Mdelo.Equipamento;
+import Mdelo.Reserva;
 import daoAula.EquipamentoDao;
 
 public class EquipamentoNegocio {
@@ -24,6 +25,11 @@ private EquipamentoDao equipamentoDao;
 	public List<Equipamento> listaEquipamentos() {
 		List<Equipamento> equipamentos = null;
 		equipamentos = equipamentoDao.listaEquipamentos();
+		return equipamentos;
+	}
+	public List<Equipamento> listaEquipamentosPorReserva(Reserva reserva) {
+		List<Equipamento> equipamentos = null;
+		equipamentos = equipamentoDao.listaEquipamentosPorReserva(reserva);
 		return equipamentos;
 	}
 

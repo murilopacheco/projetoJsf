@@ -50,7 +50,7 @@
 </context-param>	
  <!-- Tempo de sessão -->
 <session-config>
-    <session-timeout>1</session-timeout>
+    <session-timeout>15</session-timeout>
  </session-config>
  <!--  login filter -->
   <filter>

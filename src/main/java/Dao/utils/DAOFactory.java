@@ -8,6 +8,8 @@ import daoAula.PerfilUsuarioDao;
 import daoAula.PerfilUsuarioDaoImp;
 import daoAula.PessoaDao;
 import daoAula.PessoaDaoImp;
+import daoAula.ReservaDao;
+import daoAula.ReservaDaoImp;
 import daoAula.UsuarioDao;
 import daoAula.UsuarioDaoImp;
 
@@ -39,5 +41,11 @@ public class DAOFactory {
 		EquipamentoDaoImp equipamentoDaoImp = new EquipamentoDaoImp();
 		equipamentoDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
 		return equipamentoDaoImp;
+	}
+	
+	public static ReservaDao createReserva(){
+		ReservaDaoImp reservaDaoImp = new ReservaDaoImp();
+		reservaDaoImp.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+		return reservaDaoImp;
 	}
 }

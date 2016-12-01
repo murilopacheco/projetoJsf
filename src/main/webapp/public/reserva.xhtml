@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:mj="http://mojarra.dev.java.net/mojarra_ext"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head />
+<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+<h:body>
+	<p:growl id="growl" showDetail="true" sticky="true" />
+	<h:form id="formReserva" role="form">
+		<p:panel id="panel" header="Reservas">
+			<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+				<p:outputLabel for="data" value="Data da Reserva*:" />
+				<p:calendar id="data" value="#{reserva.reserva.dataReserva}" mindate="#{reserva.dataMinima}" maxdate="#{reserva.dataMaxima}" 
+				pattern="dd/MM/yyyy" required="true"
+                        requiredMessage="Por favor, data não pode ser anterior ao dia de hoje.">
+                  <p:ajax event="dateSelect" listener="#{reserva.onDateSelect}" update="horaInicio, horaFim" />
+                </p:calendar>
+
+				<p:outputLabel for="horaInicio" value="Inicio:" />
+				<p:calendar id="horaInicio" value="#{reserva.reserva.horaInicio}"
+					pattern="HH:mm" timeOnly="true" mask="99:99"/>
+				<p:outputLabel for="horaFim" value="Fim:" />
+				<p:calendar id="horaFim" value="#{reserva.reserva.horaFim}"
+					pattern="HH:mm" timeOnly="true"  mask="99:99"/>
+
+
+				<p:commandButton value="Listar"
+					actionListener="#{reserva.listaEquipamentosPorReserva()}"
+					update="formReserva, growl">
+
+				</p:commandButton>
+			</h:panelGrid>
+
+			<p:panel id="panelList" header="Lista de  Equipamentos">
+					<p:dataTable id="equipamentos" var="varEquipamento"
+						value="#{reserva.equipamentosLivres}"
+						selection="#{reserva.equipamentosSelecionados}" rowKey="#{varEquipamento.id}"
+						style="margin-bottom:0">
+						<f:facet name="header">
+           					 Equipamentos
+        				</f:facet>
+						 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+						<p:column filterBy="#{varEquipamento.id}" headerText="Id"
+							footerText="contem" filterMatchMode="contains">
+							<h:outputText value="#{varEquipamento.id}" />
+						</p:column>
+
+						<p:column filterBy="#{varEquipamento.nome}" headerText="equipamento"
+							footerText="contem" filterMatchMode="contains">
+							<h:outputText value="#{varEquipamento.nome}" />
+						</p:column>
+						<p:column filterBy="#{varEquipamento.quantidade}"
+							headerText="Quantidade" footerText="contem" filterMatchMode="contains">
+							<h:outputText value="#{varEquipamento.quantidade}" />
+						</p:column>
+						<p:column filterBy="#{varEquipamento.codigo}"
+							headerText="Codigo" footerText="contem" filterMatchMode="contains">
+							<h:outputText value="#{varEquipamento.codigo}" />
+						</p:column>
+						<p:column filterBy="#{varEquipamento.tipo}"
+							headerText="Tipo" footerText="contem" filterMatchMode="contains">
+							<h:outputText value="#{varEquipamento.tipo}" />
+						</p:column>
+					</p:dataTable>
+			</p:panel>
+
+		</p:panel>
+		<p:commandButton value="Reservar" id="reserva"
+			actionListener="#{reserva.salvar()}" update=" formlista, formReserva, growl"
+			icon="ui-icon-disk" />
+	</h:form>
+	 <h:form id= "formlista" >
+    	<p:panel id="panel" header="Lista de  Equipamentos">
+			 <p:dataTable var="varReserva" value="#{reserva.reservas}" id="tabelaFiltrada" 
+			 widgetVar="reservasFiltrados" emptyMessage="Não existem dados a serem exibidos" 
+			 filteredValue="#{reserva.reservasFiltradas}">
+		        <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Busca Geral:" />
+		                <p:inputText id="filtroGlobal" onkeyup="PF('reservasFiltrados').filter()" 
+		                style="width:150px" placeholder="Digite a busca"/>
+		            </p:outputPanel>
+		        </f:facet>
+		 
+		        <p:column filterBy="#{varReserva.id}" headerText="Id" footerText="contem" filterMatchMode="contains">
+		            <h:outputText value="#{varReserva.id}" />
+		        </p:column>
+		 
+		        <p:column filterBy="#{varReserva.dataReserva}" headerText="data" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varReserva.dataReserva}" />
+		        </p:column>
+		         <p:column filterBy="#{varReserva.horaInicio}" headerText="Hora Inicio " footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varReserva.horaInicio}" />
+		        </p:column>
+		         <p:column filterBy="#{varReserva.horaFim}" headerText="Hora Fim " footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varReserva.horaFim}" />
+		        </p:column>
+		        <p:column filterBy="#{varReserva.equipamento.nome}" headerText="equipamento " footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varReserva.equipamento.nome}" />
+		        </p:column>
+		         <p:column headerText="Ação">
+			         <p:commandButton value="excluir" actionListener="#{equipamento.Delete(varReserva)}" 
+			         update="tabelaFiltrada">
+			         <p:ajax  render=":formlista" ></p:ajax>
+			         </p:commandButton> 
+			    </p:column>
+	    </p:dataTable>
+    </p:panel>
+	    
+	   </h:form>
+</h:body>
+</html>

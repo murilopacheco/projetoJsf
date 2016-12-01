@@ -29,7 +29,21 @@
 				<p:inputText value="#{equipamento.equipamento.quantidade}" required="true"
 					id="inputQuantidade" pt:placeholder="Digite aqui a quantidade">
 				</p:inputText>
-	        <p:commandButton value="Save" actionListener="#{equipamento.salvar()}" update= "growl" >
+				<p:outputLabel for="tipo" value="Tipo do equipamento:" />
+		        <p:selectOneMenu id="tipo" value="#{equipamento.equipamento.tipo}" style="width:125px">
+		            <f:selectItem itemLabel="Select One" itemValue="" />
+		            <f:selectItem itemLabel="DataShow VGA" itemValue="1" />
+		            <f:selectItem itemLabel="DataShow HDMI" itemValue="2" />
+		            <f:selectItem itemLabel="Cabo VGA" itemValue="3" />
+		            <f:selectItem itemLabel="Cabo HDMI" itemValue="4" />
+		             <f:selectItem itemLabel="extensão" itemValue="5" />
+		             <f:selectItem itemLabel="microfone" itemValue="6" />
+		              <f:selectItem itemLabel="caixa de som" itemValue="7" />
+		        </p:selectOneMenu>
+		        <p:outputLabel for="inputCodigo" value="Código" />
+				<p:inputText id="inputCodigo" value="#{equipamento.equipamento.codigo}" required="true"/>
+	        <p:commandButton value="Save" actionListener="#{equipamento.salvar()}" update= "formlista,formEquipamento, growl" >
+	       	<p:ajax  render=":formlista" ></p:ajax>
 	        </p:commandButton>  
 	        	</h:panelGrid>    
 	    </p:panel>
@@ -41,7 +55,10 @@
     	<p:panel id="panel" header="Lista de  Equipamentos">
 			 <p:dataTable var="varEquipamento" value="#{equipamento.equipamentos}" id="tabelaFiltrada" 
 			 widgetVar="equipamentosFiltrados" emptyMessage="Não existem dados a serem exibidos" 
-			 filteredValue="#{equipamento.equipamentos}">
+			 filteredValue="#{equipamento.equipamentosFiltrados}"
+			 			 paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">>
 		        <f:facet name="header">
 		            <p:outputPanel>
 		                <h:outputText value="Busca Geral:" />
@@ -54,21 +71,24 @@
 		            <h:outputText value="#{varEquipamento.id}" />
 		        </p:column>
 		 
-		        <p:column filterBy="#{varEquipamento.nome}" headerText="Login" footerText="contem" filterMatchMode="contains">
+		        <p:column filterBy="#{varEquipamento.nome}" headerText="Equipamento" footerText="contem" filterMatchMode="contains">
 		                 <h:outputText value="#{varEquipamento.nome}" />
 		        </p:column>
-		         <p:column filterBy="#{varEquipamento.quantidade}" headerText="Login" footerText="contem" filterMatchMode="contains">
+		        <p:column filterBy="#{varEquipamento.codigo}" headerText="Código" footerText="contem" filterMatchMode="contains">
+		                 <h:outputText value="#{varEquipamento.codigo}" />
+		        </p:column>
+		         <p:column filterBy="#{varEquipamento.quantidade}" headerText="Quantidade" footerText="contem" filterMatchMode="contains">
 		                 <h:outputText value="#{varEquipamento.quantidade}" />
 		        </p:column>
 		         <p:column headerText="Ação">
-			         <p:commandButton value="excluir" actionListener="#{equipamento.Delete(varEquipamento)}" 
-			         update="tabelaFiltrada">
-			         <p:ajax  render=":formlista" ></p:ajax>
+			         <p:commandButton value="editar" actionListener="#{equipamento.Editar(varEquipamento)}" 
+			         update="formEquipamento">
+			         <p:ajax  render=":formEquipamento" ></p:ajax>
 			         </p:commandButton> 
 			    </p:column>
 	    </p:dataTable>
     </p:panel>
 	    
-	   </h:form>  -->
+	   </h:form> 
    </h:body>
 </html>

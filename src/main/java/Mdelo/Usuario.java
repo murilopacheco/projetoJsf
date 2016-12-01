@@ -3,12 +3,12 @@ package Mdelo;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -39,7 +39,16 @@ public class Usuario {
 	@Transient
 	private List<Usuario> usuariosFiltrados;
 	
+	@OneToMany
+	private List<Reserva> reservas;
 	
+	
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
 	public long getId() {
 		return id;
 	}

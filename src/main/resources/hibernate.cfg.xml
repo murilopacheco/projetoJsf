@@ -20,5 +20,6 @@
   <mapping class="Mdelo.Produto"/>
   <mapping class="Mdelo.PerfilUsuario"/>
   <mapping class="Mdelo.Equipamento"/>
+  <mapping class="Mdelo.Reserva"/>
  </session-factory>
 </hibernate-configuration>
